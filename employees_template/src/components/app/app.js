@@ -52,6 +52,10 @@ class App extends Component {
     });
 }
 
+onToggleIncrease = () => {
+  
+}
+
   render() {
     return (
       <div className="app">
