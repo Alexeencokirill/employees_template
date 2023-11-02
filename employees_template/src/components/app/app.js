@@ -17,48 +17,71 @@ class App extends Component {
         { name: 'Alex M.', salary: 2000, increase: true, rise: false, id: 2 },
         { name: 'Carl W.', salary: 4000, increase: false, rise: false, id: 3 },
       ],
-    }
+    };
     this.maxId = 4;
   }
 
   deleteItem = (id) => {
-    this.setState(({data}) => {
-        // const index = data.findIndex(elem => elem.id === id)  первый способ удаления
+    this.setState(({ data }) => {
+      // const index = data.findIndex(elem => elem.id === id)  первый способ удаления
 
-        // const before = data.slice(0, index)   
-        // const after = data.slice(index + 1)
+      // const before = data.slice(0, index)
+      // const after = data.slice(index + 1)
 
-        // const newArr = [...before, ...after]
+      // const newArr = [...before, ...after]
 
-        return {
-            data: data.filter(item => item.id !== id)  //   второй способ
-        }
-        
-    })
-  }
+      return {
+        data: data.filter((item) => item.id !== id), //   второй способ
+      };
+    });
+  };
 
   addItem = (name, salary) => {
     const newItem = {
-        name, 
-        salary,
-        increase: false,
-        id: this.maxId++
-    }
-    this.setState(({data}) => {
-        const newArr = [...data, newItem];
-        return {
-            data: newArr
-        }
+      name,
+      salary,
+      increase: false,
+      rise: false,
+      id: this.maxId++,
+    };
+    this.setState(({ data }) => {
+      const newArr = [...data, newItem];
+      return {
+        data: newArr,
+      };
     });
-}
+  };
 
-onToggleIncrease = (id) => {
-  console.log('Increase this ${id}')
-}
+  onToggleIncrease = (id) => {
+    // this.setState(({ data }) => {
+    //   const index = data.findIndex((elem) => elem.id === id); /// первый способ
 
-onToggleRise = (id) => {
-  console.log('Rise this ${id}')
-}
+    //   const old = data[index];
+    //   const newItem = { ...old, increase: !old.increase };
+    //   const newArr = [
+    //     ...data.slice(0, index),
+    //     newItem,
+    //     ...data.slice(index + 1),
+    //   ];
+
+    //   return {
+    //     data: newArr,
+    //   };
+    // });
+
+    this.setState(({ data }) => ({
+      data: data.map(item => {             // beter solution
+        if (item.id === id) {
+          return {...item, increase: !item.increase}
+        }
+        return item;
+      })
+    }));
+  };
+
+  onToggleRise = (id) => {
+    console.log('Rise this ${id}');
+  };
 
   render() {
     return (
@@ -75,7 +98,7 @@ onToggleRise = (id) => {
           onToggleIncrease={this.onToggleIncrease}
           onToggleRise={this.onToggleRise}
         />
-        <EmployeesAddForm onAdd={this.addItem}/>
+        <EmployeesAddForm onAdd={this.addItem} />
       </div>
     );
   }
