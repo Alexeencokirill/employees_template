@@ -1,6 +1,7 @@
 {
-  "name": "my-app",
+  "name": "employees_template",
   "version": "0.1.0",
+  "homepage": "https://alexeencokirill.github.io/employees_template/",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
