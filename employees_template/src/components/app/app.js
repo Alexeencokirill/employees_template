@@ -52,9 +52,9 @@ class App extends Component {
     });
   };
 
-  onToggleIncrease = (id) => {
+  // onToggleIncrease = (id) => {
     // this.setState(({ data }) => {
-    //   const index = data.findIndex((elem) => elem.id === id); /// первый способ
+    //   const index = data.findIndex((elem) => elem.id === id);    //  bad one 
 
     //   const old = data[index];
     //   const newItem = { ...old, increase: !old.increase };
@@ -69,24 +69,45 @@ class App extends Component {
     //   };
     // });
 
-    this.setState(({ data }) => ({
-      data: data.map(item => {             // beter solution
-        if (item.id === id) {
-          return {...item, increase: !item.increase}
-        }
-        return item;
-      })
-    }));
-  };
+  //   this.setState(({ data }) => ({
+  //     data: data.map(item => {                                // beter solution
+  //       if (item.id === id) {
+  //         return {...item, increase: !item.increase}
+  //       }
+  //       return item;
+  //     })
+  //   }));
+  // };
 
-  onToggleRise = (id) => {
-    console.log('Rise this ${id}');
-  };
+  // onToggleRise = (id) => {
+  //   this.setState(({ data }) => ({
+  //     data: data.map(item => {
+  //       if (item.id === id) {
+  //         return {...item, rise: !item.rise}
+  //       }
+  //       return item;
+  //     })
+  //   }));
+  // };
+
+  onToggleProp = (id, prop) => {         // best solution for both increase and rise
+    this.setState(({ data }) => ({
+          data: data.map(item => {
+            if (item.id === id) {
+              return {...item, [prop]: !item[prop]}
+            }
+            return item;
+          })
+        }));
+  }
 
   render() {
+    const employees = this.state.data.length;
+    const increased = this.state.data.filter(item => item.increase).length;
+
     return (
       <div className="app">
-        <AppInfo />
+        <AppInfo employees={employees} increased={increased}/>
 
         <div className="search-panel">
           <SearchPanel />
@@ -95,8 +116,7 @@ class App extends Component {
         <EmployeesList
           data={this.state.data}
           onDelete={this.deleteItem}
-          onToggleIncrease={this.onToggleIncrease}
-          onToggleRise={this.onToggleRise}
+          onToggleProp={this.onToggleProp}
         />
         <EmployeesAddForm onAdd={this.addItem} />
       </div>
