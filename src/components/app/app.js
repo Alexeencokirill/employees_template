@@ -128,6 +128,10 @@ class App extends Component {
     }
   }
 
+  onFilterSelect = (filter) => {
+     this.setState({filter})
+  }
+
   render() {
     const{data, term, filter} =this.state
     const employees = this.state.data.length;
@@ -140,7 +144,7 @@ class App extends Component {
 
         <div className="search-panel">
           <SearchPanel onUpdateSearch={this.onUpdateSearch}/>
-          <AppFilter />
+          <AppFilter filter={filter} onFilterSelect={this.onFilterSelect}/>
         </div>
         <EmployeesList
           data={visibleData}
